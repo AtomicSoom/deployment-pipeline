@@ -1,0 +1,40 @@
+name: Project Name
+description: Provides the project name to be used based upon branch and other project configurations.
+author: Selig Labs, Inc <info@seliglabs.com>
+
+inputs:
+  branch:
+    description: The branch that triggered the Action.
+    required: true
+
+outputs:
+  prefix:
+    description: The project name.
+    value: ${{ steps.prefix.outputs.value }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get Prefix
+      id: prefix
+      shell: bash
+      run: |
+        echo "##[set-output name=value;]$(
+          case ${{ inputs.branch }} in
+            dev | development | internal)
+              echo internal-
+              ;;
+            qa)
+              echo qa-
+              ;;
+            internal)
+              echo internal-
+              ;;
+            stage | staging)
+              echo staging-
+              ;;
+            *)
+              echo ""
+              ;;
+          esac
+        )"

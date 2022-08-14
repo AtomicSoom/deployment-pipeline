@@ -1,0 +1,30 @@
+name: Format Name
+description: Formats the project name based upon branch.
+author: Selig Labs, Inc <info@seliglabs.com>
+
+inputs:
+  override:
+    description: Override the value of the project name.
+    required: false
+
+outputs:
+  name:
+    description: Name of project to be used.
+    value: ${{ steps.prefix.outputs.prefix }}${{ inputs.override || fromJSON(steps.package.outputs.jsonData).name}}
+
+runs:
+  using: composite
+  steps:
+    - name: Extract Branch Name
+      id: branch
+      uses: SeligLabs/gitactions/branch-name@main
+
+    - name: Get the Prefix
+      id: prefix
+      uses: AtomicSoom/deployment-pipeline/prefix@main
+      with:
+        branch: ${{ steps.branch.outputs.branch }}
+
+    - name: Get Package Information
+      id: package
+      uses: SeligLabs/gitactions/read-json-file@main

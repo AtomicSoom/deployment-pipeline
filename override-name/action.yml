@@ -1,0 +1,19 @@
+name: Override Name
+description: Allows for manual value to bbe used the path for the specific branch as specified in the project JSON.
+author: Selig Labs, Inc <info@seliglabs.com>
+
+outputs:
+  override:
+    description: Override value to be used.
+    value: ${{ fromJSON(steps.package.outputs.jsonData).pathOverrides[steps.branch.outputs.branch] }}
+
+runs:
+  using: composite
+  steps:
+    - name: Extract Branch Name
+      id: branch
+      uses: SeligLabs/gitactions/branch-name@main
+
+    - name: Get Package Information
+      id: package
+      uses: SeligLabs/gitactions/read-json-file@main

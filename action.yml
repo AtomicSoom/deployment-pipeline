@@ -1,0 +1,79 @@
+name: Static Project Deployment Pipeline
+description: Deploys a static project to Atomic Digital Design's AR S3 bucket.
+inputs:
+  AWS_ACCESS_KEY_ID:
+    description: AWS Access Key ID
+    required: true
+    # default: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY:
+    description: AWS Secret Access Key
+    required: true
+    # default: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION:
+    description: Target AWS Region
+    required: false
+    default: eu-west-3
+  AWS_S3_BUCKET:
+    description: Target S3 Bucket
+    required: false
+    default: atomic.design-projects
+  AWS_S3_ENDPOINT:
+    description: AWS Endpoint
+    required: false
+    default: s3.amazonaws.com
+  SOURCE_DIR:
+    description: Local Directory/File to Upload
+    required: false
+    default: dist
+  DEST_DIR:
+    description: Target Directory to Upload to
+    required: false
+  CLOUDFRONT_DISTRIBUTION_ID:
+    description: ID of the CloudFront Distribution to be Invalidated
+    required: false
+    default: E1KCQ0FGV6A25U
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: echo Building project
+
+    - name: Build Package
+      uses: SeligLabs/gitactions/build-npm@main
+      with:
+        NODE_VERSION: 12
+
+    - name: Package Name
+      id: name
+      uses: AtomicSoom/deployment-pipeline/name@main
+      with:
+        override: ${{ inputs.DEST_DIR }}
+
+    - shell: bash
+      run: "echo Publishing project to: /${{ steps.name.outputs.name }}"
+
+    - name: Deploy to S3
+      uses: SeligLabs/gitactions/s3-deploy@main
+      with:
+        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ inputs.AWS_REGION }}
+        AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET }}
+        SOURCE_DIR: ${{ inputs.SOURCE_DIR }}
+        DEST_DIR: ${{ steps.name.outputs.name }}
+
+    - shell: bash
+      run: "echo Completed publishing of the project. Now invalidating the path: /${{ steps.name.outputs.name }}/*"
+
+    - name: Invalidate the CloudFront Distribution
+      uses: SeligLabs/gitactions/invalidate-cloudfront@main
+      with:
+        AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ inputs.AWS_REGION }}
+        DISTRIBUTION: ${{ inputs.CLOUDFRONT_DISTRIBUTION_ID }}
+        PATHS: /${{ steps.name.outputs.name }}/*
+
+    - shell: bash
+      run: echo DEPLOYMENT COMPLETE

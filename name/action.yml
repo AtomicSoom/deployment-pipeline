@@ -1,0 +1,26 @@
+name: Name
+description: Determines the project name to be used for the project.
+author: Selig Labs, Inc <info@seliglabs.com>
+
+inputs:
+  override:
+    description: Override the project name.
+    required: false
+
+outputs:
+  name:
+    description: Project name to be used.
+    value: ${{ steps.override.outputs.override || steps.name.outputs.name }}
+
+runs:
+  using: composite
+  steps:
+    - name: Override Name
+      id: override
+      uses: AtomicSoom/deployment-pipeline/override-name@main
+
+    - name: Project Name
+      id: name
+      uses: AtomicSoom/deployment-pipeline/format-name@main
+      with:
+        override: ${{ inputs.override }}
