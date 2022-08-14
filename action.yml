@@ -40,7 +40,7 @@ runs:
       run: echo Building project
 
     - name: Build Package
-      uses: SeligLabs/gitactions/build-npm@main
+      uses: SeligLabs/gitactions/build-yarn@main
       with:
         NODE_VERSION: 12
 
