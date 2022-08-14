@@ -41,8 +41,6 @@ runs:
 
     - name: Build Package
       uses: SeligLabs/gitactions/build-yarn@main
-      with:
-        NODE_VERSION: 12
 
     - name: Package Name
       id: name
