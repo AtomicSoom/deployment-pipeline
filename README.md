@@ -12,7 +12,7 @@ This Git Action will automatically build the yarn project, deploy to S3, and wil
 
 ### Basic Example
 
-The following example will run the pipeline anytime code is pushed to the `internal`, `qa`, `staging`, or `main` branches. Additionally, it allows manual triggering to be performed. The code should be added in a `.yml` file within the `.github/workflows` directory.
+The following example will run the pipeline anytime code is pushed to the `internal`, `qa`, `staging`, or `main` branches. Additionally, it allows manual triggering to be performed. The code should be added in a `deploy.yml` file within the `.github/workflows` directory.
 
 ```yml
 name: Deployment Pipeline
