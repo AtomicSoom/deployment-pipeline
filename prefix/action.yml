@@ -33,8 +33,11 @@ runs:
             stage | staging)
               echo staging-
               ;;
-            *)
+            main | master)
               echo ""
+              ;;
+            *)
+              echo ${{ inputs.branch }}-
               ;;
           esac
         )"
