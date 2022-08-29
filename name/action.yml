@@ -28,5 +28,5 @@ runs:
     - uses: SeligLabs/gitactions/condition@main
       id: condition
       with:
-        condition: ${{ false }}
+        condition: ${{ inputs.override == false }}
         false: ${{ steps.override.outputs.override || steps.name.outputs.name }}
