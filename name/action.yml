@@ -25,8 +25,17 @@ runs:
       with:
         override: ${{ inputs.override }}
 
+    - shell: bash
+      run: echo Override value - ${{ inputs.override }}
+
+    - shell: bash
+      run: echo Quote value - ${{ inputs.override == 'false' }}
+
+    - shell: bash
+      run: echo straight value - ${{ inputs.override == FALSE }}
+
     - uses: SeligLabs/gitactions/condition@main
       id: condition
       with:
-        condition: ${{ inputs.override == "false" }}
+        condition: ${{ inputs.override == 'false' }}
         false: ${{ steps.override.outputs.override || steps.name.outputs.name }}
