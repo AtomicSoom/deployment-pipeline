@@ -35,10 +35,11 @@ inputs:
   INSTALL_COMMAND:
     description: The install command to use.
     required: false
+    default: yarn
   BUILD_COMMAND:
     description: The build command to use.
     required: false
-
+    default: yarn build
 
 runs:
   using: composite
