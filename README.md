@@ -6,13 +6,13 @@ This is the standard deployment pipeline for Atomic Digit Design static web proj
 
 This Git Action is developed to be reusable across all static yarn Atomic projects. While it should be compatible with any static yarn project, it is primarily designed to compliment projects created based upon the [8thwall_template](https://github.com/AtomicSoom/8thwall_template) template.
 
-This Git Action will automatically build the yarn project, deploy to S3, and will clear out the correct CloudFront distribution. Various configuration options, supplied in the `action.yml` file of the specific project repo can modify the behavior.
+This Git Action will automatically build the yarn project, deploy to S3, and will clear out the correct CloudFront distribution. Various configuration options, supplied in the `deploy.yml` file of the specific project repo can modify the behavior.
 
 ## Usage
 
 ### Basic Example
 
-The following example will run the pipeline anytime code is pushed to the `internal`, `qa`, `staging`, or `main` branches. Additionally, it allows manual triggering to be performed. The code should be added in a `.yml` file within the `.github/workflows` directory.
+The following example will run the pipeline anytime code is pushed to the `internal`, `qa`, `staging`, or `main` branches. Additionally, it allows manual triggering to be performed. The code should be added in a `deploy.yml` file within the `.github/workflows` directory.
 
 ```yml
 name: Deployment Pipeline
