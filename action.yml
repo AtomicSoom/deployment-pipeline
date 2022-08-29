@@ -28,7 +28,6 @@ inputs:
   DEST_DIR:
     description: Target Directory to Upload to
     required: false
-    default: false
   CLOUDFRONT_DISTRIBUTION_ID:
     description: ID of the CloudFront Distribution to be Invalidated
     required: false
