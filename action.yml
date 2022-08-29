@@ -32,6 +32,13 @@ inputs:
     description: ID of the CloudFront Distribution to be Invalidated
     required: false
     default: E1KCQ0FGV6A25U
+  INSTALL_COMMAND:
+    description: The install command to use.
+    required: false
+  BUILD_COMMAND:
+    description: The build command to use.
+    required: false
+
 
 runs:
   using: composite
@@ -41,6 +48,9 @@ runs:
 
     - name: Build Package
       uses: SeligLabs/gitactions/build-yarn@main
+      with:
+        INSTALL_COMMAND: ${{ inputs.INSTALL_COMMAND }}
+        BUILD_COMMAND: ${{ inputs.BUILD_COMMAND }}
 
     - name: Package Name
       id: name
