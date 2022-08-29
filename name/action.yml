@@ -32,7 +32,10 @@ runs:
       run: echo Quote value - ${{ inputs.override == 'false' }}
 
     - shell: bash
-      run: echo straight value - ${{ inputs.override == FALSE }}
+      run: echo Quote caps value - ${{ inputs.override == 'FALSE' }}
+
+    - shell: bash
+      run: echo straight value - ${{ inputs.override == false }}
 
     - uses: SeligLabs/gitactions/condition@main
       id: condition
