@@ -28,6 +28,7 @@ inputs:
   DEST_DIR:
     description: Target Directory to Upload to
     required: false
+    default: false
   CLOUDFRONT_DISTRIBUTION_ID:
     description: ID of the CloudFront Distribution to be Invalidated
     required: false
@@ -70,7 +71,7 @@ runs:
         AWS_REGION: ${{ inputs.AWS_REGION }}
         AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET }}
         SOURCE_DIR: ${{ inputs.SOURCE_DIR }}
-        # DEST_DIR: ${{ steps.name.outputs.name }}
+        DEST_DIR: ${{ steps.name.outputs.name }}
 
     - shell: bash
       run: "echo Completed publishing of the project. Now invalidating the path: /${{ steps.name.outputs.name }}/*"

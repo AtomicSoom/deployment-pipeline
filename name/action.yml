@@ -10,7 +10,7 @@ inputs:
 outputs:
   name:
     description: Project name to be used.
-    value: ${{ steps.override.outputs.override || steps.name.outputs.name }}
+    value: ${{ steps.condition.outputs.value }}
 
 runs:
   using: composite
@@ -24,3 +24,9 @@ runs:
       uses: AtomicSoom/deployment-pipeline/format-name@main
       with:
         override: ${{ inputs.override }}
+
+    - uses: SeligLabs/gitactions/condition@main
+      id: condition
+      with:
+        condition: ${{ inputs.override === false }}
+        false: ${{ steps.override.outputs.override || steps.name.outputs.name }}
