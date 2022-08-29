@@ -10,7 +10,7 @@ inputs:
 outputs:
   name:
     description: Project name to be used.
-    value: ${{ steps.override.outputs.override || steps.name.outputs.name }}
+    value: ${{ steps.override.outputs.override === true ? '' : steps.override.outputs.override || steps.name.outputs.name }}
 
 runs:
   using: composite
