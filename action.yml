@@ -54,7 +54,7 @@ runs:
     - name: Build Package
       uses: SeligLabs/gitactions/build-yarn@main
       with:
-        DIRECTORY: ${{ inputs.BUILD_DIRECTORY }}
+        BUILD_DIRECTORY: ${{ inputs.BUILD_DIRECTORY }}
         INSTALL_COMMAND: ${{ inputs.INSTALL_COMMAND }}
         BUILD_COMMAND: ${{ inputs.BUILD_COMMAND }}
 
