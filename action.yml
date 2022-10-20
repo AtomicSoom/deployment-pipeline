@@ -63,6 +63,7 @@ runs:
       uses: AtomicSoom/deployment-pipeline/name@main
       with:
         override: ${{ inputs.DEST_DIR }}
+        BUILD_DIR: ${{ inputs.BUILD_DIR }}
 
     - shell: bash
       run: "echo Publishing project to: /${{ steps.name.outputs.name }}"
