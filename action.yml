@@ -51,11 +51,6 @@ runs:
     - shell: bash
       run: echo Building project
 
-    - name: Change Directory
-      uses: SeligLabs/gitactions/change-directory@main
-      with:
-        DIRECTORY: ${{ inputs.BUILD_DIRECTORY }}
-
     - name: Build Package
       uses: SeligLabs/gitactions/build-yarn@main
       with:
