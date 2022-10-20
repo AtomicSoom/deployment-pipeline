@@ -33,6 +33,7 @@ runs:
       uses: AtomicSoom/deployment-pipeline/format-name@main
       with:
         override: ${{ inputs.override }}
+        BUILD_DIR: ${{ inputs.BUILD_DIR }}
 
     - uses: SeligLabs/gitactions/condition@main
       id: condition
