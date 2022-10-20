@@ -2,10 +2,18 @@ name: Override Name
 description: Allows for manual value to bbe used the path for the specific branch as specified in the project JSON.
 author: Selig Labs, Inc <info@seliglabs.com>
 
+inputs:
+  BUILD_DIR:
+    description: The directory to change
+    required: false
+    default: ""
+
+
 outputs:
   override:
     description: Override value to be used.
     value: ${{ fromJSON(steps.package.outputs.jsonData).pathOverrides[steps.branch.outputs.branch] }}
+
 
 runs:
   using: composite
@@ -17,3 +25,5 @@ runs:
     - name: Get Package Information
       id: package
       uses: SeligLabs/gitactions/read-json-file@main
+      with:
+        BUILD_DIR: ${{ inputs.BUILD_DIR }}

@@ -32,6 +32,10 @@ inputs:
     description: ID of the CloudFront Distribution to be Invalidated
     required: false
     default: E1KCQ0FGV6A25U
+  BUILD_DIR:
+    description: The directory containing the project.
+    required: false
+    default: ""
   INSTALL_COMMAND:
     description: The install command to use.
     required: false
@@ -50,6 +54,7 @@ runs:
     - name: Build Package
       uses: SeligLabs/gitactions/build-yarn@main
       with:
+        BUILD_DIR: ${{ inputs.BUILD_DIR }}
         INSTALL_COMMAND: ${{ inputs.INSTALL_COMMAND }}
         BUILD_COMMAND: ${{ inputs.BUILD_COMMAND }}
 
@@ -58,6 +63,7 @@ runs:
       uses: AtomicSoom/deployment-pipeline/name@main
       with:
         override: ${{ inputs.DEST_DIR }}
+        BUILD_DIR: ${{ inputs.BUILD_DIR }}
 
     - shell: bash
       run: "echo Publishing project to: /${{ steps.name.outputs.name }}"
@@ -69,6 +75,7 @@ runs:
         AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ inputs.AWS_REGION }}
         AWS_S3_BUCKET: ${{ inputs.AWS_S3_BUCKET }}
+        BUILD_DIR: ${{ inputs.BUILD_DIR }}
         SOURCE_DIR: ${{ inputs.SOURCE_DIR }}
         DEST_DIR: ${{ steps.name.outputs.name }}
 

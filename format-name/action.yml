@@ -7,10 +7,17 @@ inputs:
     description: Override the value of the project name.
     required: false
 
+  BUILD_DIR:
+    description: The directory to change
+    required: false
+    default: ""
+
+
 outputs:
   name:
     description: Name of project to be used.
     value: ${{ steps.prefix.outputs.prefix }}${{ inputs.override || fromJSON(steps.package.outputs.jsonData).name}}
+
 
 runs:
   using: composite
@@ -28,3 +35,5 @@ runs:
     - name: Get Package Information
       id: package
       uses: SeligLabs/gitactions/read-json-file@main
+      with:
+        BUILD_DIR: ${{ inputs.BUILD_DIR }}
