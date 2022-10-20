@@ -35,7 +35,7 @@ inputs:
   BUILD_DIRECTORY:
     description: The directory containing the project.
     required: false
-    default: ./
+    default: ""
   INSTALL_COMMAND:
     description: The install command to use.
     required: false
@@ -59,6 +59,7 @@ runs:
     - name: Build Package
       uses: SeligLabs/gitactions/build-yarn@main
       with:
+        DIRECTORY: ${{ inputs.BUILD_DIRECTORY }}
         INSTALL_COMMAND: ${{ inputs.INSTALL_COMMAND }}
         BUILD_COMMAND: ${{ inputs.BUILD_COMMAND }}
 
